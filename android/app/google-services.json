@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "403637855318",
+    "firebase_url": "https://pet-store-5c00f-default-rtdb.firebaseio.com",
+    "project_id": "pet-store-5c00f",
+    "storage_bucket": "pet-store-5c00f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403637855318:android:2806961ab12de6d8a787f7",
+        "android_client_info": {
+          "package_name": "com.example.pet_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuNDbMsvHisC1_ldUnupD-PGrLHxh9m-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
