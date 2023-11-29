@@ -64,7 +64,7 @@ class BookingServicePage extends GetView<BookingServiceController> {
                     locale: 'vi_VN',
                     height: 88.0,
                     initialSelectedDate: DateTime.now(),
-                    selectionColor: Colors.greenAccent.shade100,
+                    selectionColor: Colors.green,
                     selectedTextColor: Colors.white,
                     onDateChange: (date) {
                       controller.chooseBookingDateTime(date);
@@ -106,8 +106,13 @@ class BookingServicePage extends GetView<BookingServiceController> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
-                  children:
-                      List.generate(20, (index) => const ItemDoctor()).toList(),
+                  children: List.generate(
+                      10,
+                      (index) => ItemDoctor(
+                            onChoose: (idDoctor) {
+                              controller.idDoctorStr.value = idDoctor;
+                            },
+                          )).toList(),
                 )),
             const SizedBox(height: 24.0),
           ],

@@ -9,6 +9,7 @@ class TextInput extends StatelessWidget {
   final String? error;
   final IconData? iconData;
   final bool? isReadOnly;
+  final int? maxLineInput;
   final Widget? child;
   final String? Function(String?)? validator;
   final Function()? onClick;
@@ -23,6 +24,7 @@ class TextInput extends StatelessWidget {
     this.error,
     this.iconData,
     this.isReadOnly,
+    this.maxLineInput,
     this.child,
     this.validator,
     this.onClick,
@@ -56,6 +58,7 @@ class TextInput extends StatelessWidget {
         TextFormField(
           controller: inputController,
           readOnly: isReadOnly ?? false,
+          maxLines: maxLineInput,
           decoration: InputDecoration(
               hintText: hint,
               border: const OutlineInputBorder(),

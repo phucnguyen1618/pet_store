@@ -9,4 +9,5 @@ class AppRoutes {
   static const String orderListPage = '/order_list_page';
   static const String bookingServicePage = '/booking_service_page';
   static const String bookingListPage = '/booking_list_page';
+  static const String doctorDetailPage = '/doctor_detail_page';
 }

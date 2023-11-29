@@ -41,7 +41,7 @@ class _ItemBookingState extends State<ItemBooking> {
               ),
               const SizedBox(width: 8.0),
               Text(
-                'Ngày thực hiện: ${AppUtils.formatBookingDateTime(widget.booking.orderDateTime)}',
+                'Ngày đặt lịch: ${AppUtils.formatBookingDateTime(widget.booking.orderDateTime)}',
                 style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.black26,

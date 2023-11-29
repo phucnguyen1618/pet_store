@@ -15,6 +15,8 @@ class SignUpController extends GetxController {
   TextEditingController birthDayController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   RxBool isAccept = RxBool(false);
   Rxn<DateTime> birthDay = Rxn<DateTime>();
@@ -27,8 +29,8 @@ class SignUpController extends GetxController {
             password: passwordController.text,
             onComplete: (id) {
               prefs.setString(Strings.idUser, id);
-              final account = Account(id, fullNameController.text, null,
-                  emailController.text, birthDay.value, null);
+              final account = Account(id, fullNameController.text, phoneController.text,
+                  emailController.text, birthDay.value, null, addressController.text);
               FirebaseService.writeAccountToDb(account);
               Get.offAllNamed(AppRoutes.homePage);
             },

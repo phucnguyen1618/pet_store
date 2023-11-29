@@ -44,4 +44,15 @@ class TextValidate {
     }
     return null;
   }
+
+  static String? validateTextEmpty(String? input) {
+    if (input != null) {
+      if (input.isEmpty) {
+        return 'Dữ liệu không được để trống';
+      }
+    } else {
+      return 'Đây là trường bắt buộc';
+    }
+    return null;
+  }
 }

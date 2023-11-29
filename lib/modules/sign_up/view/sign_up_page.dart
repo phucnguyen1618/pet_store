@@ -84,6 +84,23 @@ class SignUpPage extends GetView<SignUpController> {
                 validator: (value) => TextValidate.isPasswordValidate(value),
               ),
               const SizedBox(height: 16.0),
+              TextInput(
+                title: 'Số điện thoại',
+                hint: 'Nhập số điện thoại',
+                inputController: controller.phoneController,
+                isRequied: true,
+                validator: (value) => TextValidate.validateTextEmpty(value),
+              ),
+              const SizedBox(height: 16.0),
+              TextInput(
+                title: 'Địa chỉ',
+                hint: 'Nhập địa chỉ',
+                inputController: controller.addressController,
+                isRequied: true,
+                maxLineInput: 5,
+                validator: (value) => TextValidate.validateTextEmpty(value),
+              ),
+              const SizedBox(height: 16.0),
               Obx(() => CheckboxListTile(
                     value: controller.isAccept.value,
                     controlAffinity: ListTileControlAffinity.leading,

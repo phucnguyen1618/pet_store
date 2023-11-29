@@ -50,28 +50,31 @@ class ChooseBookingService extends StatelessWidget {
           const SizedBox(height: 8.0),
           Obx(() => Wrap(
                 spacing: 8.0,
+                runSpacing: 8.0,
                 children: controller.chooseServices
                     .map((e) => Chip(
                           elevation: 0,
-                          side: BorderSide(
-                              width: 0.0, color: Colors.greenAccent.shade100),
-                          padding: const EdgeInsets.all(8),
+                          side: const BorderSide(
+                              width: 0.5, color: Colors.black12),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          padding: const EdgeInsets.all(4.0),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100.0)),
-                          backgroundColor: Colors.greenAccent[100],
+                          backgroundColor: Colors.white,
                           shadowColor: Colors.black,
                           avatar: CircleAvatar(
                               backgroundImage: NetworkImage(e.imageService)),
                           label: Text(
                             e.name,
                             style: const TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.black,
                             ),
                           ),
                           deleteIcon: const Icon(
                             Icons.close,
-                            size: 16.0,
+                            size: 14.0,
                           ),
                           deleteIconColor: Colors.black,
                           onDeleted: () {
@@ -80,7 +83,7 @@ class ChooseBookingService extends StatelessWidget {
                         ))
                     .toList(),
               )),
-          const SizedBox(height: 12.0),
+          const SizedBox(height: 24.0),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,

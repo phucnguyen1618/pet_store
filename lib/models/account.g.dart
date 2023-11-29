@@ -9,12 +9,13 @@ part of 'account.dart';
 Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       json['id'] as String,
       json['name'] as String,
-      json['phone'] as String?,
+      json['phone'] as String,
       json['email'] as String,
       json['birthDay'] == null
           ? null
           : DateTime.parse(json['birthDay'] as String),
       json['sex'] as int?,
+      json['address'] as String,
     )..avatar = json['avatar'] as String?;
 
 Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
@@ -25,4 +26,5 @@ Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
       'birthDay': instance.birthDay?.toIso8601String(),
       'sex': instance.sex,
       'avatar': instance.avatar,
+      'address': instance.address,
     };

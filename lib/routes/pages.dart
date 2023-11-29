@@ -4,6 +4,8 @@ import 'package:pet_store/modules/booking_service/binding/booking_service_bindin
 import 'package:pet_store/modules/booking_service/view/booking_service_page.dart';
 import 'package:pet_store/modules/cart/binding/cart_binding.dart';
 import 'package:pet_store/modules/cart/view/cart_page.dart';
+import 'package:pet_store/modules/doctor_detail/binding/doctor_detail_binding.dart';
+import 'package:pet_store/modules/doctor_detail/view/doctor_detail_page.dart';
 import 'package:pet_store/modules/forgot_password/binding/forgot_password_binding.dart';
 import 'package:pet_store/modules/forgot_password/view/forgot_password_page.dart';
 import 'package:pet_store/modules/home/binding/home_binding.dart';
@@ -72,5 +74,10 @@ final pages = [
     name: AppRoutes.bookingListPage,
     page: () => const BookingListPage(),
     binding: BookingListBinding(),
+  ),
+  GetPage(
+    name: AppRoutes.doctorDetailPage,
+    page: () => const DoctorDetailPage(),
+    binding: DoctorDetailBinding(),
   ),
 ];

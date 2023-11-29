@@ -26,6 +26,7 @@ class BookingServiceController extends GetxController {
   RxList<double> servicePrices = RxList<double>();
   Rx<DateTime> bookingDateTime = Rx<DateTime>(DateTime.now());
   RxDouble totalAmount = RxDouble(0);
+  RxString idDoctorStr = RxString('');
 
   @override
   void onInit() {
@@ -71,23 +72,27 @@ class BookingServiceController extends GetxController {
   void onConfirmBookingService() {
     final idUser = prefs.getString(Strings.idUser);
     if (idUser != null) {
-      String idBooking = const Uuid().v4();
-      final bookingDetails = chooseServices
-          .map((e) => BookingDetail(e.idService, e.price))
-          .toList();
-      final booking = Booking(idBooking, idUser, 'idDoctor', bookingDetails,
-          bookingDateTime.value, null, totalAmount.value, 0);
-      FirebaseService.writeBookingServiceToDb(
-        booking,
-        () {
-          EasyLoading.showSuccess('Đặt lịch thành công');
-          Get.offAllNamed(AppRoutes.homePage);
-        },
-        (error) {
-          log('Error: $error');
-          EasyLoading.showError('Đã có lỗi xảy ra');
-        },
-      );
+      if (idDoctorStr.value != '') {
+        String idBooking = const Uuid().v4();
+        final bookingDetails = chooseServices
+            .map((e) => BookingDetail(e.idService, e.price))
+            .toList();
+        final booking = Booking(idBooking, idUser, 'idDoctor', bookingDetails,
+            bookingDateTime.value, null, totalAmount.value, 0);
+        FirebaseService.writeBookingServiceToDb(
+          booking,
+          () {
+            EasyLoading.showSuccess('Đặt lịch thành công');
+            Get.offAllNamed(AppRoutes.homePage);
+          },
+          (error) {
+            log('Error: $error');
+            EasyLoading.showError('Đã có lỗi xảy ra');
+          },
+        );
+      } else {
+        EasyLoading.showError('Xin bạn vui lòng chọn bác sĩ');
+      }
     }
   }
 }

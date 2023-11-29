@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_store/routes/app_routes.dart';
 
 class ItemDoctor extends StatelessWidget {
-  const ItemDoctor({super.key});
+  final Function(String) onChoose;
+  const ItemDoctor({
+    super.key,
+    required this.onChoose,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +27,12 @@ class ItemDoctor extends StatelessWidget {
                 width: 70.0,
                 height: 70.0,
                 decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green,
-                ),
+                    shape: BoxShape.circle,
+                    color: Colors.green,
+                    image: DecorationImage(
+                      image: AssetImage('assets/image_doctor.png'),
+                      fit: BoxFit.cover,
+                    )),
               ),
               const SizedBox(width: 12.0),
               Expanded(
@@ -89,7 +97,9 @@ class ItemDoctor extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.doctorDetailPage);
+                  },
                   elevation: 0.0,
                   child: const Text(
                     'Xem chi tiết',
@@ -102,7 +112,9 @@ class ItemDoctor extends StatelessWidget {
                 ),
                 const SizedBox(width: 12.0),
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    onChoose('idBacSi');
+                  },
                   color: Colors.green,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(4.0)),
