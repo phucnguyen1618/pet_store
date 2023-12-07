@@ -51,6 +51,7 @@ dependencies:
   shared_preferences: ^2.2.2
   uuid:
   date_picker_timeline: ^1.2.5
+  url_launcher: ^6.2.1
 
   #Hive Database library
   hive_flutter: ^1.1.0

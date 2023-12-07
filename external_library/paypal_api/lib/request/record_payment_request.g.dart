@@ -10,6 +10,7 @@ RecordPaymentRequest _$RecordPaymentRequestFromJson(
         Map<String, dynamic> json) =>
     RecordPaymentRequest(
       json['method'] as String,
+      json['payment_id'] as String?,
       json['note'] as String?,
       json['payment_date'] as String?,
       json['amount'] == null
@@ -25,6 +26,7 @@ Map<String, dynamic> _$RecordPaymentRequestToJson(
         RecordPaymentRequest instance) =>
     <String, dynamic>{
       'method': instance.method,
+      'payment_id': instance.paymentId,
       'note': instance.note,
       'payment_date': instance.date,
       'amount': instance.amount,

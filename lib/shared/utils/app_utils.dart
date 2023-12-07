@@ -79,4 +79,9 @@ class AppUtils {
             ? Colors.green
             : Colors.redAccent;
   }
+
+  static String convertVNDToUSD(double value) {
+    final result = value * 0.000041;
+    return result.toString();
+  }
 }
