@@ -39,7 +39,7 @@ class Product extends HiveObject {
   double getPrice() {
     return discount != null
         ? discount != 0
-            ? cost - cost * discount!
+            ? cost - cost * (discount! / 100)
             : cost
         : cost;
   }

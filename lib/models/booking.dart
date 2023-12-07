@@ -17,6 +17,7 @@ class Booking {
   String? address;
   double totalAmount;
   int status;
+  String? reasonCancel;
 
   Booking(
     this.idBooking,
@@ -27,6 +28,7 @@ class Booking {
     this.address,
     this.totalAmount,
     this.status,
+    this.reasonCancel,
   );
 
   factory Booking.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +46,7 @@ class Booking {
       "address": address,
       "totalAmount": totalAmount,
       "status": status,
+      "reason_cancel": reasonCancel
     };
   }
 }

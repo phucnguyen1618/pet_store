@@ -30,9 +30,7 @@ class ProfileController extends GetxController {
       if (account.sex != null) {
         sex.value = account.sex!;
       }
-      if (account.phone != null) {
-        phoneController.text = account.phone!;
-      }
+      phoneController.text = account.phone;
       if (account.birthDay != null) {
         birthDay.value = account.birthDay;
         birthDayController.text = AppUtils.formatBirthDay(account.birthDay!);

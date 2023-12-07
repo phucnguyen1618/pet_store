@@ -78,7 +78,7 @@ class BookingServiceController extends GetxController {
             .map((e) => BookingDetail(e.idService, e.price))
             .toList();
         final booking = Booking(idBooking, idUser, 'idDoctor', bookingDetails,
-            bookingDateTime.value, null, totalAmount.value, 0);
+            bookingDateTime.value, null, totalAmount.value, 0, null);
         FirebaseService.writeBookingServiceToDb(
           booking,
           () {

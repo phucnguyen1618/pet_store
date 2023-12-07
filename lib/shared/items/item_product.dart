@@ -47,7 +47,10 @@ class ItemProduct extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.0),
                     color: Colors.blue,
-                    image: DecorationImage(image: imageProvider)),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    )),
               ),
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   CircularProgressIndicator(value: downloadProgress.progress),
@@ -66,7 +69,7 @@ class ItemProduct extends StatelessWidget {
             const SizedBox(height: 8.0),
             Text(
               '${AppUtils.formatPrice(product.getPrice())} đ',
-              maxLines: 2,
+              maxLines: 1,
               style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -82,10 +85,10 @@ class ItemProduct extends StatelessWidget {
               color: Colors.blue,
               minWidth: double.infinity,
               elevation: 0.0,
-              child: Row(
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Icon(
                     Icons.shopping_cart,
                     color: Colors.white,

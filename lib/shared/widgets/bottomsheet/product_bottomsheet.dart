@@ -42,7 +42,9 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                     borderRadius: BorderRadius.circular(4.0),
                     color: Colors.redAccent,
                     image: DecorationImage(
-                        image: NetworkImage(widget.product.image))),
+                      image: NetworkImage(widget.product.image),
+                      fit: BoxFit.cover,
+                    )),
               ),
               const SizedBox(width: 12.0),
               Expanded(
@@ -59,18 +61,16 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                       ),
                     ),
                     const SizedBox(height: 12.0),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        RichText(
-                            text: TextSpan(
-                                text: "Giá sản phẩm: ",
-                                style: const TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.black,
-                                ),
-                                children: [
+                    RichText(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        text: TextSpan(
+                            text: "Giá sản phẩm: ",
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                            children: [
                               TextSpan(
                                   text:
                                       '${AppUtils.formatPrice(widget.product.getPrice())} đ',
@@ -80,31 +80,14 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                                     fontWeight: FontWeight.bold,
                                   ))
                             ])),
-                        const SizedBox(width: 12.0),
-                        widget.product.discount != null
-                            ? Expanded(
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(
-                                      Icons.arrow_downward,
-                                      color: Colors.redAccent.shade100,
-                                      size: 16.0,
-                                    ),
-                                    Text(
-                                      '${widget.product.discount! * 100}%',
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        color: Colors.redAccent.shade100,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
+                    const SizedBox(height: 8.0),
+                    widget.product.discount != null
+                        ? Text('Giảm giá: ${widget.product.discount!.toInt()}%',
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.black,
+                            ))
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -226,9 +209,9 @@ class _ProductBottomSheetState extends State<ProductBottomSheet> {
                           const BorderSide(width: 0.5, color: Colors.redAccent),
                     ),
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
+                    child: const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(
                           Icons.shopping_cart_outlined,
                           color: Colors.redAccent,
