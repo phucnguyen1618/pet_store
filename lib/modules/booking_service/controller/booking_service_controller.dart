@@ -11,6 +11,7 @@ import 'package:pet_store/shared/utils/app_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../models/doctor.dart';
 import '../../../models/service.dart';
 import '../../../shared/constants/strings.dart';
 
@@ -27,6 +28,8 @@ class BookingServiceController extends GetxController {
   Rx<DateTime> bookingDateTime = Rx<DateTime>(DateTime.now());
   RxDouble totalAmount = RxDouble(0);
   RxString idDoctorStr = RxString('');
+
+  List<Doctor> doctors = [];
 
   @override
   void onInit() {
@@ -77,8 +80,16 @@ class BookingServiceController extends GetxController {
         final bookingDetails = chooseServices
             .map((e) => BookingDetail(e.idService, e.price))
             .toList();
-        final booking = Booking(idBooking, idUser, 'idDoctor', bookingDetails,
-            bookingDateTime.value, null, totalAmount.value, 0, null);
+        final booking = Booking(
+            idBooking,
+            idUser,
+            idDoctorStr.value,
+            bookingDetails,
+            bookingDateTime.value,
+            null,
+            totalAmount.value,
+            0,
+            null);
         FirebaseService.writeBookingServiceToDb(
           booking,
           () {

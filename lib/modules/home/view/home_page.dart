@@ -7,6 +7,7 @@ import 'package:pet_store/shared/items/item_result.dart';
 import 'package:pet_store/shared/items/item_suggestion.dart';
 import 'package:pet_store/shared/widgets/image_slider.dart';
 import 'package:pet_store/shared/widgets/panel/menu_panel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/product.dart';
 import '../../../shared/items/item_product.dart';
@@ -283,10 +284,63 @@ class HomePage extends GetView<HomeController> {
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: Colors.blue,
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        title: Text(
+                          'địa chỉ của shop'.toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: const Text(
+                          '39 khuông việt, phường phú trung, quận tân phú',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _makePhoneCall('0978517900');
+          },
+          heroTag: "Call",
+          backgroundColor: Colors.redAccent,
+          child: const Icon(
+            Icons.call,
+            color: Colors.white,
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
   }
 
   List<Product> filterProductListWithCategory(String category) {

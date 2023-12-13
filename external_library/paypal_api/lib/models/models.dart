@@ -5,6 +5,7 @@ export 'billing_info.dart';
 export 'detail.dart';
 export 'discount.dart';
 export 'invoice_amount.dart';
+export 'invoice_detail.dart';
 export 'invoice.dart';
 export 'invoicer.dart';
 export 'item.dart';

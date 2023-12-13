@@ -9,6 +9,7 @@ import 'package:pet_store/models/cart.dart';
 import 'package:pet_store/models/order.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/doctor.dart';
 import '../../models/product.dart';
 import '../../models/account.dart';
 import '../constants/strings.dart';
@@ -332,5 +333,33 @@ class FirebaseService {
       service.Service dataService = service.Service.fromJson(data);
       onComplete(dataService);
     });
+  }
+
+  //Doctor
+  static void getDoctors(
+    Function(List<Doctor>) onComplete,
+    Function(String) onError,
+  ) {
+    List<Doctor> doctors = [];
+    _dbRef.child('Doctors').get().then((snasphot) {
+      for (DataSnapshot dataSnapshot in snasphot.children) {
+        final data = jsonDecode(jsonEncode(dataSnapshot.value));
+        Doctor doctor = Doctor.fromJson(data);
+        doctors.add(doctor);
+        onComplete(doctors);
+      }
+    }).onError((error, stackTrace) => onError(error.toString()));
+  }
+
+  static void getDoctorByID(
+    String id,
+    Function(Doctor) onComplete,
+    Function(String) onError,
+  ) {
+    _dbRef.child('Doctors').child(id).get().then((snasphot) {
+      final data = jsonDecode(jsonEncode(snasphot.value));
+      Doctor doctor = Doctor.fromJson(data);
+      onComplete(doctor);
+    }).onError((error, stackTrace) => onError(error.toString()));
   }
 }

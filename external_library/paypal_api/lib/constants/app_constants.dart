@@ -5,7 +5,7 @@ class AppConstants {
   static const String clientSecret =
       'ELzIHXbcgMGRz3ihykv3tiT5iJuTyZsRZt_AH1EF3uvnanQD_oZuakmMPAmS1S_73RNj4aekY-I9r5sI';
   static const String accessToken =
-      'A21AAKw-FpltEPLFO4MmS7ZuGvQiINbSAlstMqx1gkstBgRpB9KKwdZMlrzQjS4LvylMGP4PKEQWOWOzZMp_BC1g7ymGTi1ow';
+      'A21AAIWvZBon7m7R4Nvh6E0MjksY0lcxyScamanuyaTz_ZX3KPasc5H86dwjtp8CjElo66HNqbX0M5Ap8hge1_4GLR0r6d6Hg';
 
   static const String contentType = 'application/x-www-form-urlencoded';
   static const String grantType = 'client_credentials';

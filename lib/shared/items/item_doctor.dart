@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_store/models/doctor.dart';
 import 'package:pet_store/routes/app_routes.dart';
 
 class ItemDoctor extends StatelessWidget {
-  final Function(String) onChoose;
+  final Doctor doctor;
+  final Function(Doctor) onChoose;
+
   const ItemDoctor({
     super.key,
     required this.onChoose,
+    required this.doctor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width - 32 * 2,
+      width: Get.width - 12 * 2,
       color: Colors.white,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       padding: const EdgeInsets.all(12.0),
@@ -26,11 +30,11 @@ class ItemDoctor extends StatelessWidget {
               Container(
                 width: 70.0,
                 height: 70.0,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.green,
                     image: DecorationImage(
-                      image: AssetImage('assets/image_doctor.png'),
+                      image: NetworkImage(doctor.avatar),
                       fit: BoxFit.cover,
                     )),
               ),
@@ -40,10 +44,10 @@ class ItemDoctor extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      'Trần Ngọc Huỳnh Anh',
+                    Text(
+                      doctor.name,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -56,7 +60,7 @@ class ItemDoctor extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Bác sĩ phẫu thuật',
+                          doctor.sex == 0 ? 'Nam' : 'Nữ',
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 12.0,
@@ -74,7 +78,7 @@ class ItemDoctor extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '2 năm kinh nghiệm',
+                          '${doctor.experience} năm kinh nghiệm',
                           maxLines: 1,
                           style: TextStyle(
                             fontSize: 12.0,
@@ -98,7 +102,7 @@ class ItemDoctor extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.doctorDetailPage);
+                    Get.toNamed(AppRoutes.doctorDetailPage, arguments: doctor);
                   },
                   elevation: 0.0,
                   child: const Text(
@@ -113,7 +117,7 @@ class ItemDoctor extends StatelessWidget {
                 const SizedBox(width: 12.0),
                 MaterialButton(
                   onPressed: () {
-                    onChoose('idBacSi');
+                    onChoose(doctor);
                   },
                   color: Colors.green,
                   shape: RoundedRectangleBorder(

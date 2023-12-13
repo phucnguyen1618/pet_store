@@ -13,11 +13,10 @@ Doctor _$DoctorFromJson(Map<String, dynamic> json) => Doctor(
       DateTime.parse(json['birthDay'] as String),
       json['phone'] as String,
       json['avatar'] as String,
-      json['experience'] as int,
-      (json['specializes'] as List<dynamic>)
-          .map((e) => Specialize.fromJson(e as Map<String, dynamic>))
+      json['experience'] as int?,
+      (json['specializes'] as List<dynamic>?)
+          ?.map((e) => Specialize.fromJson(e as Map<String, dynamic>))
           .toList(),
-      json['degree'] as String,
       json['workAddress'] as String,
     );
 
@@ -30,6 +29,5 @@ Map<String, dynamic> _$DoctorToJson(Doctor instance) => <String, dynamic>{
       'avatar': instance.avatar,
       'experience': instance.experience,
       'specializes': instance.specializes,
-      'degree': instance.degree,
       'workAddress': instance.workAddress,
     };

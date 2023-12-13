@@ -7,7 +7,10 @@ import 'item_product_in_order.dart';
 class ItemOrder extends StatelessWidget {
   final Order order;
 
-  const ItemOrder({super.key, required this.order});
+  const ItemOrder({
+    super.key,
+    required this.order,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class ItemOrder extends StatelessWidget {
                 fontSize: 14.0),
           ),
           subtitle: Text(
-            AppUtils.formatOrderDateTime(order.orderDateTime),
+           AppUtils.formatOrderDateTime(order.orderDateTime),
             style: const TextStyle(fontSize: 12.0),
           ),
           trailing: Text(

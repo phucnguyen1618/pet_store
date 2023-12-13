@@ -11,9 +11,8 @@ class Doctor {
   DateTime birthDay;
   String phone;
   String avatar;
-  int experience;
-  List<Specialize> specializes;
-  String degree;
+  int? experience;
+  List<Specialize>? specializes;
   String workAddress;
 
   Doctor(
@@ -25,7 +24,6 @@ class Doctor {
     this.avatar,
     this.experience,
     this.specializes,
-    this.degree,
     this.workAddress,
   );
 

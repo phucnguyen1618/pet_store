@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_store/modules/booking_service/controller/booking_service_controller.dart';
 import 'package:pet_store/modules/booking_service/view/choose_booking_service.dart';
+import 'package:pet_store/modules/booking_service/view/doctor_list.dart';
 import 'package:pet_store/modules/booking_service/view/orderer_info.dart';
-import 'package:pet_store/shared/items/item_doctor.dart';
 
 class BookingServicePage extends GetView<BookingServiceController> {
   const BookingServicePage({super.key});
@@ -34,10 +34,10 @@ class BookingServicePage extends GetView<BookingServiceController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
             const OrdererInfo(),
             const SizedBox(height: 12.0),
             const ChooseBookingService(),
@@ -74,50 +74,11 @@ class BookingServicePage extends GetView<BookingServiceController> {
               ),
             ),
             const SizedBox(height: 16.0),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Danh sách bác sĩ',
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Xem thêm',
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 4.0),
-            SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: List.generate(
-                      10,
-                      (index) => ItemDoctor(
-                            onChoose: (idDoctor) {
-                              controller.idDoctorStr.value = idDoctor;
-                            },
-                          )).toList(),
-                )),
+            DoctorList(onChooseDoctor: (doctor) {
+              controller.idDoctorStr.value = doctor.id;
+            }),
             const SizedBox(height: 24.0),
-          ],
-        ),
-      ),
+          ])),
       persistentFooterButtons: [
         Center(
           child: ButtonTheme(

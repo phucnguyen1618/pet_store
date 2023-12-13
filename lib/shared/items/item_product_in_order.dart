@@ -84,8 +84,7 @@ class _ItemProductInOrderState extends State<ItemProductInOrder> {
   }
 
   void getInfo() {
-    FirebaseService.getProductInfoByID(widget.orderDetail.idProduct,
-        (infoProduct) {
+    FirebaseService.getProductInfoByID(widget.orderDetail.idProduct, (infoProduct) {
       log('Product: ${infoProduct.toJson()}');
       setState(() {
         product = infoProduct;

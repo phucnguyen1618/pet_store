@@ -18,7 +18,7 @@ class SignInController extends GetxController {
 
   RxnString emailError = RxnString();
   RxnString passwordError = RxnString();
-  RxBool isHidePassword = RxBool(true);
+  RxBool isHiddenPassword = RxBool(true);
 
   @override
   void onInit() {
@@ -46,7 +46,7 @@ class SignInController extends GetxController {
   }
 
   void onSetShowHidePassword() {
-    isHidePassword.value = !isHidePassword.value;
+    isHiddenPassword.value = !isHiddenPassword.value;
   }
 
   void _handleErrorDataEmail() {

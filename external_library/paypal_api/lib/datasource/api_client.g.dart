@@ -34,13 +34,14 @@ class _ApiClient implements ApiClient {
       r'Content-Type': contentType,
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = grantType;
+    final _data = {'grant_type': grantType};
+    _data.removeWhere((k, v) => v == null);
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<Authentication>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: contentType,
+      contentType: 'application/x-www-form-urlencoded',
     )
             .compose(
               _dio.options,
@@ -58,10 +59,13 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<GenerateInvoiceNumberResponse> createInvoiceNumber() async {
+  Future<GenerateInvoiceNumberResponse> createInvoiceNumber(
+      {String? token}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<GenerateInvoiceNumberResponse>(Options(
@@ -85,10 +89,15 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<InvoiceResponse> createInvoice(InvoiceRequest invoiceRequest) async {
+  Future<InvoiceResponse> createInvoice({
+    required InvoiceRequest invoiceRequest,
+    String? token,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(invoiceRequest.toJson());
     final _result = await _dio
@@ -113,13 +122,16 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<Link> sendInvoice(
-    String invoiceId,
-    SendInvoiceRequest request,
-  ) async {
+  Future<Link> sendInvoice({
+    required String invoiceId,
+    required SendInvoiceRequest request,
+    String? token,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _result =
@@ -144,20 +156,25 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<Invoice> getInvoiceDetail(String requestUrl) async {
+  Future<InvoiceDetail> getInvoiceDetail({
+    required String invoiceId,
+    String? token,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Invoice>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<InvoiceDetail>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '${requestUrl}',
+              '/v2/invoicing/invoices/{invoice_id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -166,18 +183,21 @@ class _ApiClient implements ApiClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Invoice.fromJson(_result.data!);
+    final value = InvoiceDetail.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<RecordInvoicePaymentResponse> recordPayment(
-    String invoiceId,
-    RecordPaymentRequest paymentRequest,
-  ) async {
+  Future<RecordInvoicePaymentResponse> recordPayment({
+    required String invoiceId,
+    required RecordPaymentRequest paymentRequest,
+    String? token,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(paymentRequest.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -199,6 +219,75 @@ class _ApiClient implements ApiClient {
             ))));
     final value = RecordInvoicePaymentResponse.fromJson(_result.data!);
     return value;
+  }
+
+  @override
+  Future<ListInvoiceResponse> getListInvoice({
+    int? page,
+    int? pageSize,
+    bool? required = true,
+    String? token,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'page_size': pageSize,
+      r'total_required': required,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ListInvoiceResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/v2/invoicing/invoices',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ListInvoiceResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<void> cancelInvoice({
+    required String idInvoice,
+    required CancelInvoiceRequest request,
+    String? token,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/v2/invoicing/invoices/{invoice_id}/cancel',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

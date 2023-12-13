@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_store/models/booking.dart';
 import 'package:pet_store/shared/items/item_service_in_booking.dart';
 import 'package:pet_store/shared/services/firebase_service.dart';
 import 'package:pet_store/shared/utils/app_utils.dart';
+
+import '../../models/doctor.dart';
 
 class ItemBooking extends StatefulWidget {
   final Booking booking;
@@ -15,10 +19,13 @@ class ItemBooking extends StatefulWidget {
 
 class _ItemBookingState extends State<ItemBooking> {
   User? currentUser;
+  Doctor? doctor;
+  int age = 0;
 
   @override
   void initState() {
     currentUser = FirebaseService.getCurrentUser();
+    getDoctorInfo();
     super.initState();
   }
 
@@ -103,26 +110,37 @@ class _ItemBookingState extends State<ItemBooking> {
             ),
           ),
           const SizedBox(height: 8.0),
-          RichText(
-              text: const TextSpan(
-                  text: 'Bác sĩ: ',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                TextSpan(
-                  text: 'Trần Ngọc Huỳnh Anh',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ]))
+          doctor != null
+              ? RichText(
+                  text: TextSpan(
+                      text: 'Bác sĩ: ',
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                      TextSpan(
+                        text: '${doctor!.name}  - $age tuổi',
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ]))
+              : const SizedBox()
         ],
       ),
     );
+  }
+
+  void getDoctorInfo() {
+    FirebaseService.getDoctorByID(widget.booking.idDoctor, (doctorInfo) {
+      setState(() {
+        doctor = doctorInfo;
+        age = DateTime.now().difference(doctorInfo.birthDay).inDays ~/ 365;
+      });
+    }, (error) => log('Error: $error'));
   }
 }

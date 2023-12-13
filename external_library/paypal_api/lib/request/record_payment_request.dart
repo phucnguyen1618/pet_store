@@ -7,8 +7,6 @@ part 'record_payment_request.g.dart';
 @JsonSerializable()
 class RecordPaymentRequest {
   String method;
-  @JsonKey(name: 'payment_id')
-  String? paymentId;
   String? note;
   @JsonKey(name: 'payment_date')
   String? date;
@@ -18,7 +16,6 @@ class RecordPaymentRequest {
 
   RecordPaymentRequest(
     this.method,
-    this.paymentId,
     this.note,
     this.date,
     this.amount,

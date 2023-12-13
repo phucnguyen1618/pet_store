@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_store/models/cart.dart';
 import 'package:pet_store/models/product.dart';
@@ -18,14 +19,22 @@ class ItemOrderDetail extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: [
-          Container(
+          CachedNetworkImage(
             width: 100.0,
             height: 100.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4.0),
-              image: DecorationImage(image: NetworkImage(product.image)),
-              color: Colors.blue,
+            imageUrl: product.image,
+            imageBuilder: (context, provider) => Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: provider,
+                    fit: BoxFit.cover,
+                  )),
             ),
+            placeholder: (context, url) =>
+            const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
           const SizedBox(width: 12.0),
           Expanded(

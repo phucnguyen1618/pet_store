@@ -20,22 +20,41 @@ extension SignInExtension on SignInPage {
               ),
             ),
             const SizedBox(height: 12.0),
-            Obx(
-              () => TextInput(
-                title: 'Mật khẩu',
-                hint: 'Nhập mật khẩu',
-                inputController: controller.passwordController,
-                iconData: controller.isHidePassword.value
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
-                onClick: () {
-                  controller.onSetShowHidePassword();
-                },
-                note:
-                    'Mật khẩu là một dãy văn bản có độ dài lớn hơn 8 và có ít nhất một chữ hoa, một chữ thường và một ký hiệu đặc biệt.',
-                validator: (value) => TextValidate.isPasswordValidate(value),
-                error: controller.passwordError.value,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Mật khẩu',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.blue,
+                  ),
+                ),
+                const SizedBox(height: 4.0),
+                Obx(
+                  () => TextFormField(
+                    controller: controller.passwordController,
+                    obscureText: controller.isHiddenPassword.value,
+                    decoration: InputDecoration(
+                        hintText: 'Nhập mật khẩu',
+                        helperMaxLines: 2,
+                        border: const OutlineInputBorder(),
+                        errorText: controller.passwordError.value,
+                        helperText:
+                            'Mật khẩu là một dãy văn bản có độ dài lớn hơn 8 và có ít nhất một chữ hoa, một chữ thường và một ký hiệu đặc biệt.',
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.onSetShowHidePassword();
+                            },
+                            icon: Icon(controller.isHiddenPassword.value
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined))),
+                    validator: (value) =>
+                        TextValidate.isPasswordValidate(value),
+                  ),
+                ),
+              ],
             ),
             Align(
               alignment: Alignment.centerRight,
