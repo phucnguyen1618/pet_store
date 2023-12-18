@@ -212,10 +212,21 @@ class FirebaseService {
     }
   }
 
-  static void removeItemCartByID(Cart itemCart) {
+  static void removeItemCartByID(
+    Cart itemCart,
+    Function() onComplete,
+    Function(String) onError,
+  ) {
     final idUser = prefs.getString(Strings.idUser);
     if (idUser != null) {
-      _dbRef.child('Carts').child(idUser).child(itemCart.idItem).remove();
+      _dbRef
+          .child('Carts')
+          .child(idUser)
+          .child(itemCart.idItem)
+          .remove()
+          .then((value) {
+        onComplete();
+      }).onError((error, stackTrace) => onError(error.toString()));
     }
   }
 
@@ -228,6 +239,7 @@ class FirebaseService {
 
   static void updateQuantity(String idCart, int value) {
     final idUser = prefs.getString(Strings.idUser);
+    log('Id: $idCart');
     if (idUser != null) {
       _dbRef
           .child('Carts')

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:pet_store/models/cart.dart';
 import 'package:pet_store/shared/services/firebase_service.dart';
@@ -30,6 +32,14 @@ class CartController extends GetxController {
     }
   }
 
+  void onUpdateItemQuantity(Cart cart, int value) {
+    FirebaseService.updateQuantity(cart.idItem, value);
+    log('Id Cart: ${cart.idItem}');
+    cart.quantity = value;
+    cart.save();
+    onUpdateTotalPrice();
+  }
+
   void onUpdateTotalPrice({List<Cart>? dataList}) {
     totalPrice.value = AppUtils.calculateTotalPrice(dataList ?? cartList);
   }
@@ -39,8 +49,9 @@ class CartController extends GetxController {
   }
 
   void onDeleteItemCart(Cart itemCart) {
-    HiveService.deleteCart(itemCart);
-    FirebaseService.removeItemCartByID(itemCart);
-    cartList.value = HiveService.getAllCarts();
+    FirebaseService.removeItemCartByID(itemCart, () {
+      HiveService.deleteCart(itemCart);
+      cartList.value = HiveService.getAllCarts();
+    }, (error) => log('Error: $error'));
   }
 }

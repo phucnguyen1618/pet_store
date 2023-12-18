@@ -44,8 +44,9 @@ class CartPage extends GetView<CartController> {
                     itemCount: controller.cartList.length,
                     itemBuilder: (context, index) => ItemCart(
                       itemCart: controller.cartList[index],
-                      onUpdate: () {
-                        controller.onUpdateTotalPrice();
+                      onUpdate: (value) {
+                        controller.onUpdateItemQuantity(
+                            controller.cartList[index], value);
                       },
                       onItemDelete: (itemCart) {
                         controller.onDeleteItemCart(itemCart);

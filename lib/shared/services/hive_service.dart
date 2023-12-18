@@ -1,17 +1,13 @@
 import 'package:hive/hive.dart';
 import 'package:pet_store/models/cart.dart';
-import 'package:pet_store/models/product.dart';
-import 'package:uuid/uuid.dart';
 
 class HiveService {
   static Future<Box<Cart>> openCartBox() async =>
       await Hive.openBox<Cart>('Carts');
 
-  static void addProductToCart(Product product, int quantity) {
+  static void addToCart(Cart cart) {
     final itemCartBox = Hive.box<Cart>('Carts');
-    String idItem = const Uuid().v1();
-    final item = Cart(idItem, product, quantity);
-    itemCartBox.put(item.idItem, item);
+    itemCartBox.put(cart.idItem, cart);
   }
 
   static List<Cart> getAllCarts() {
@@ -48,7 +44,10 @@ class HiveService {
 
   static void deleteCart(Cart cart) {
     final itemCartListBox = Hive.box<Cart>('Carts');
-    itemCartListBox.delete(cart.idItem);
+    final cartDeleted = itemCartListBox.get(cart.idItem);
+    if (cartDeleted != null) {
+      cartDeleted.delete();
+    }
   }
 
   static void addAllItemCartList(List<Cart> items) {

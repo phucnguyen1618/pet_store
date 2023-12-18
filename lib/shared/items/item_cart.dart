@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pet_store/shared/services/firebase_service.dart';
-import 'package:pet_store/shared/services/hive_service.dart';
 import 'package:pet_store/shared/utils/dialog_utils.dart';
 import 'package:pet_store/shared/widgets/panel/choose_quantity_product_panel.dart';
 import '../../models/cart.dart';
@@ -8,7 +6,7 @@ import '../utils/app_utils.dart';
 
 class ItemCart extends StatelessWidget {
   final Cart itemCart;
-  final Function() onUpdate;
+  final Function(int) onUpdate;
   final Function(Cart) onItemDelete;
 
   const ItemCart({
@@ -32,7 +30,9 @@ class ItemCart extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.0),
                 color: Colors.redAccent,
                 image: DecorationImage(
-                    image: NetworkImage(itemCart.product.image))),
+                  image: NetworkImage(itemCart.product.image),
+                  fit: BoxFit.cover,
+                )),
           ),
           const SizedBox(width: 12.0),
           Expanded(
@@ -55,23 +55,27 @@ class ItemCart extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    RichText(
-                        text: TextSpan(
-                            text: "Giá sản phẩm: ",
-                            style: const TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.black,
-                            ),
-                            children: [
-                          TextSpan(
-                              text:
-                                  '${AppUtils.formatPrice(itemCart.product.getPrice())} đ',
+                    Expanded(
+                      child: RichText(
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                              text: "Giá sản phẩm: ",
                               style: const TextStyle(
                                 fontSize: 14.0,
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                              ))
-                        ])),
+                                color: Colors.black,
+                              ),
+                              children: [
+                                TextSpan(
+                                    text:
+                                        '${AppUtils.formatPrice(itemCart.product.getPrice())} đ',
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.redAccent,
+                                      fontWeight: FontWeight.bold,
+                                    ))
+                              ])),
+                    ),
                     const SizedBox(width: 12.0),
                     itemCart.product.discount != null
                         ? Expanded(
@@ -106,11 +110,7 @@ class ItemCart extends StatelessWidget {
                     ChooseQuantityProductPanel(
                       initQuantity: itemCart.quantity,
                       onChoose: (quantity) {
-                        FirebaseService.updateQuantity(
-                            itemCart.idItem, quantity);
-                        HiveService.updateQuantityInCart(
-                            id: itemCart.idItem, quantity: quantity);
-                        onUpdate();
+                        onUpdate(quantity);
                       },
                       width: 24.0,
                       height: 18.0,

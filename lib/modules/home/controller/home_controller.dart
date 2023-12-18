@@ -47,8 +47,8 @@ class HomeController extends GetxController {
           element.categories.contains('Sữa Tắm | Nước Hoa | Khử Mùi')));
       dataList3.addAll(dataList
           .where((element) => element.categories.contains('Sản Phẩm Vệ Sinh')));
-      dataList4.addAll(dataList
-          .where((element) => element.categories.contains('Chuồng | Lồng | Balo | Túi Xách')));
+      dataList4.addAll(dataList.where((element) =>
+          element.categories.contains('Chuồng | Lồng | Balo | Túi Xách')));
     });
     super.onInit();
   }
@@ -62,7 +62,7 @@ class HomeController extends GetxController {
         EasyLoading.showToast('Sản phẩm đã có trong giỏ hàng');
       } else {
         FirebaseService.writeCartToDb(itemCart);
-        HiveService.addProductToCart(product, quantity);
+        HiveService.addToCart(itemCart);
       }
     } else {
       EasyLoading.showToast('Bạn chưa đăng nhập ứng dụng');
