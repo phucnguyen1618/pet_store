@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_store/shared/services/firebase_service.dart';
 
+import '../../../models/account.dart';
+
 class UserContact extends StatefulWidget {
   const UserContact({super.key});
 
@@ -10,33 +12,18 @@ class UserContact extends StatefulWidget {
 }
 
 class _UserContactState extends State<UserContact> {
-  User? currentUser;
+  Account? account;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   bool isEditName = false;
   bool isEditEmail = false;
 
   @override
   void initState() {
-    currentUser = FirebaseService.getCurrentUser();
-    if (currentUser != null) {
-      nameController.text = currentUser!.displayName!;
-      emailController.text = currentUser!.email!;
-    }
-    nameController.addListener(() {
-      String name = nameController.text;
-      if (name != currentUser?.displayName) {
-        isEditName = true;
-      }
-    });
-    emailController.addListener(() {
-      String email = emailController.text;
-      if (email != currentUser?.email) {
-        isEditEmail = true;
-      }
-    });
+    getAccountInfo();
     super.initState();
   }
 
@@ -48,40 +35,18 @@ class _UserContactState extends State<UserContact> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Thông tin liên hệ',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              // InkWell(
-              //   onTap: () {
-              //     _editUserInfo();
-              //   },
-              //   highlightColor: Colors.transparent,
-              //   focusColor: Colors.transparent,
-              //   hoverColor: Colors.transparent,
-              //   splashColor: Colors.transparent,
-              //   child: const Text(
-              //     'Chỉnh sửa',
-              //     style: TextStyle(
-              //       fontSize: 16.0,
-              //       color: Colors.blue,
-              //     ),
-              //   ),
-              // )
-            ],
+          const Text(
+            'Thông tin liên hệ',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 16.0),
           TextField(
             controller: nameController,
+            readOnly: true,
             decoration: const InputDecoration(
               labelText: 'Người nhận',
               prefixIcon: Icon(Icons.person_outlined),
@@ -91,8 +56,19 @@ class _UserContactState extends State<UserContact> {
           const SizedBox(height: 16.0),
           TextField(
             controller: emailController,
+            readOnly: true,
             decoration: const InputDecoration(
               labelText: 'Địa chỉ liên hệ',
+              prefixIcon: Icon(Icons.email_outlined),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          TextField(
+            controller: addressController,
+            readOnly: true,
+            decoration: const InputDecoration(
+              labelText: 'Địa chỉ nhận hàng',
               prefixIcon: Icon(Icons.email_outlined),
               border: OutlineInputBorder(),
             ),
@@ -102,11 +78,13 @@ class _UserContactState extends State<UserContact> {
     );
   }
 
-  Future<void> _editUserInfo() async {
-    if (currentUser != null) {
-      if (isEditName) {
-        currentUser!.updateDisplayName(nameController.text);
-      }
-    }
+  void getAccountInfo() {
+    FirebaseService.fetchUserInfo((accountInfo) {
+      setState(() {
+        nameController.text = accountInfo.name;
+        emailController.text = accountInfo.email;
+        addressController.text = accountInfo.address;
+      });
+    });
   }
 }

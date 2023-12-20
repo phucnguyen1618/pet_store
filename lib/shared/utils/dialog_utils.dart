@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pet_store/shared/widgets/choose_payment_method.dart';
 import 'package:pet_store/shared/widgets/dialog/confirm_sign_out_dialog.dart';
 
 import '../widgets/dialog/confirm_delete_item_cart_dialog.dart';
@@ -40,6 +42,17 @@ class DialogUtils {
     ).then((value) {
       if (value != null) {
         onDelete();
+      }
+    });
+  }
+
+  static void showChoosePaymentMethod(Function(int) onChoose) {
+    showDialog(
+      context: Get.context!,
+      builder: (context) => const ChoosePaymentMethod(),
+    ).then((value) {
+      if (value != null) {
+        onChoose(value);
       }
     });
   }

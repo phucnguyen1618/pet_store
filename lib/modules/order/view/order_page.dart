@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pet_store/modules/order/controller/order_controller.dart';
 import 'package:pet_store/modules/order/view/user_contact.dart';
 import 'package:pet_store/shared/items/item_order_detail.dart';
+import 'package:pet_store/shared/utils/dialog_utils.dart';
 
 import '../../../shared/utils/app_utils.dart';
 
@@ -142,6 +143,38 @@ class OrderPage extends GetView<OrderController> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
+            const Divider(
+              height: 8.0,
+              color: Colors.grey,
+            ),
+            ListTile(
+              title: const Text(
+                'Chọn phương thức thanh toán:',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Obx(
+                () => Text(
+                  controller.paymentMethod.value == 0
+                      ? 'Thanh toán sau khi nhận hàng'
+                      : 'Thanh toán với PayPal',
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              trailing: TextButton(
+                  onPressed: () {
+                    DialogUtils.showChoosePaymentMethod((value) {
+                      controller.paymentMethod.value = value;
+                    });
+                  },
+                  child: const Text('Thay đổi')),
             ),
           ],
         ),
