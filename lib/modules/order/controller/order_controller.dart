@@ -50,7 +50,7 @@ class OrderController extends GetxController {
             .toList();
         String idOrder = const Uuid().v4();
         Order order = Order(idOrder, idUser, orderDetails, DateTime.now(),
-            totalProductPrice, 1);
+            totalProductPrice, 0);
         FirebaseService.writeOrderToDb(order, () => null, (p0) => null);
         Get.offAllNamed(AppRoutes.homePage);
       } else {
